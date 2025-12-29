@@ -43,13 +43,25 @@ if uploaded_file:
     image = Image.open(uploaded_file)
     st.image(image, use_container_width=True)
     
+    # if st.button("Parse Schedule"):
+    #     with st.spinner("Analyzing..."):
+    #         try:
+    #             st.session_state['tasks'] = parse_schedule(image)
+    #         except:
+    #             st.error("Could not read image. Try again.")
+
+
     if st.button("Parse Schedule"):
         with st.spinner("Analyzing..."):
             try:
                 st.session_state['tasks'] = parse_schedule(image)
-            except:
-                st.error("Could not read image. Try again.")
+            except Exception as e:
+                st.error(f"Detailed Error: {e}")
 
+
+
+
+    
     if 'tasks' in st.session_state:
         # Simple list to review
         for t in st.session_state['tasks']:
@@ -64,4 +76,5 @@ if uploaded_file:
                     'end': {'dateTime': t['end_iso'], 'timeZone': 'Asia/Kolkata'},
                 }
                 service.events().insert(calendarId='primary', body=event).execute()
+
             st.success("Done! Check your Google Calendar.")
