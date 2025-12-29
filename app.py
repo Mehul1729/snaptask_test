@@ -24,7 +24,7 @@ def get_calendar_service():
     return build('calendar', 'v3', credentials=creds)
 
 def parse_schedule(image):
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel('gemini-flash-latest')
     prompt = """
     Extract schedule from image. Return ONLY a JSON array.
     Format: [{"summary": "Task", "start_iso": "2025-12-29T09:00:00", "end_iso": "2025-12-29T12:00:00"}]
